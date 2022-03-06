@@ -5,7 +5,8 @@ quarkus:
     password: mysecretpassword
     jdbc:
       url: jdbc:postgresql://localhost:5432/postgres
-
   hibernate-orm:
     database:
-      generation: update
+      generation: validate
+  liquibase:
+    migrate-at-start: true

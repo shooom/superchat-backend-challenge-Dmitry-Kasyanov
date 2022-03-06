@@ -1,0 +1,52 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.6.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+    <changeSet author="dikasyanov" id="1646595194608-1">
+        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="hibernate_sequence" startValue="1"/>
+    </changeSet>
+    <changeSet author="dikasyanov" id="Create contacts table">
+        <createTable tableName="contacts">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="contacts_pkey"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="phone" type="VARCHAR(255)"/>
+            <column name="superchat_name" type="VARCHAR(255)"/>
+            <column name="telegram_id" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="dikasyanov" id="Create conversation table">
+        <createTable tableName="conversation">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="conversation_pkey"/>
+            </column>
+            <column name="channel" type="VARCHAR(255)"/>
+            <column name="corp_contact_id" type="BIGINT"/>
+            <column name="created_at" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="cust_contact_id" type="BIGINT"/>
+            <column name="updated_at" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="dikasyanov" id="Create message table">
+        <createTable tableName="message">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="message_pkey"/>
+            </column>
+            <column name="author" type="VARCHAR(255)"/>
+            <column name="body" type="VARCHAR(255)"/>
+            <column name="conversation_id" type="BIGINT"/>
+            <column name="created_at" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="updated_at" type="TIMESTAMP WITHOUT TIME ZONE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="dikasyanov" id="Add FK for corp_contact_id">
+        <addForeignKeyConstraint baseColumnNames="corp_contact_id" baseTableName="conversation" constraintName="conv_corp_contact_id_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="contacts" validate="true"/>
+    </changeSet>
+    <changeSet author="dikasyanov" id="Add FK for cust_contact_id">
+        <addForeignKeyConstraint baseColumnNames="cust_contact_id" baseTableName="conversation" constraintName="conv_cust_contact_id_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="contacts" validate="true"/>
+    </changeSet>
+    <changeSet author="dikasyanov" id="Add FK for conversation_id">
+        <addForeignKeyConstraint baseColumnNames="conversation_id" baseTableName="message" constraintName="msg_conv_id_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="conversation" validate="true"/>
+    </changeSet>
+</databaseChangeLog>
