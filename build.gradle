@@ -10,16 +10,24 @@ repositories {
 }
 
 dependencies {
+    implementation 'io.quarkus:quarkus-config-yaml'
+    implementation 'io.quarkus:quarkus-liquibase'
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
     implementation 'io.quarkus:quarkus-kotlin'
+    implementation 'io.quarkus:quarkus-resteasy-reactive-jackson'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
     implementation 'io.quarkus:quarkus-arc'
-    implementation 'io.quarkus:quarkus-resteasy'
+    implementation 'io.quarkus:quarkus-resteasy-reactive'
+    implementation 'io.quarkus:quarkus-hibernate-orm-panache-kotlin'
+    implementation 'io.quarkus:quarkus-jdbc-postgresql'
+
     testImplementation 'io.quarkus:quarkus-junit5'
     testImplementation 'io.rest-assured:rest-assured'
+    testImplementation 'org.jetbrains.kotlin:kotlin-test'
+    testImplementation 'io.quarkiverse.mockk:quarkus-junit5-mockk:0.3.0'
 }
 
-group 'org.superchat'
+group 'qrk.training'
 version '1.0.0-SNAPSHOT'
 
 java {
@@ -31,6 +39,7 @@ allOpen {
     annotation("javax.ws.rs.Path")
     annotation("javax.enterprise.context.ApplicationScoped")
     annotation("io.quarkus.test.junit.QuarkusTest")
+    annotation("javax.persistence.Entity")
 }
 
 compileKotlin {
